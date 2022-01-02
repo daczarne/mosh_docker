@@ -241,3 +241,33 @@ To make the search case insensitive we use:
 ``` shell
 find -type f -iname "f*"
 ```
+
+## Chaining commands
+
+We can chain multiple commands with semi-colons (`;`).
+
+``` shell
+mkdir test; cd test; echo done
+```
+
+If we want execution to stop at the first error, we use the *and* operator (`&&`).
+
+``` shell
+mkdir test && cd test && echo done
+```
+
+Likewise, we can use an *or* operator (`||`)
+
+``` shell
+mkdir test || echo "directory exists"
+```
+
+We can also use piping (`|`) to chain command.
+
+``` shell
+ls /bin | less
+```
+
+We can write multi-line commands by using a backslash (`\`) and pressing enter.
+
+![multiline commands](img/12_multiline_commands.png)
