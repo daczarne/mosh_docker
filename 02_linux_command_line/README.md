@@ -426,3 +426,31 @@ To see the group that a user belongs to we use:
 ``` shell
 groups USER_NAME
 ```
+
+## File permissions
+
+To see the permissions of a file we run:
+
+``` shell
+ls -l
+```
+
+![file permissions](img/17_file_permissions.png)
+
+In this output, entries that start with `d` are directories, and entries that start with `-` are files. Then comes 9 letter divided into 3 groups of 3 letters. `r` stands for read, `w` for write, and `x` for execute permissions. A `-` means that we do not have that permission for that file. In the case of a directory, the execute command permission means that we can `cd` into it.
+
+The first group represent the permissions for the user who owns this file. The second represent the permission for the group that owns the file. The third group of letter represent permissions for everyone else.
+
+If we try to execute the file we get a permissions error
+
+![exec deploy](img/18_exec_deploy.png)
+
+Here's where we need to use the `chmod` command (which stands for *change mode*). To it we need to pass `u` for users, `g` for groups, or `o` for others. The we pass `+x` which means to *add the execute permission*. If we wanted to remove the execute permission instead, we would use `u-x`.
+
+``` shell
+chmod u+x FILE_NAME
+```
+
+![chmod](img/19_chmod.png)
+
+We can use combinations of the `chmod` command. For example, `chmod og+x+w-r FILE_NAME` means that, to other users and to the group that owns the file, we want to add the execute permission, add the write permissions, and remove the read permissions. We can also pass multiple files by listing them or by supplying patterns.
