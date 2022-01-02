@@ -311,3 +311,19 @@ The `>>` means append (as opposed to re-write the entire file). This changes wil
 ``` shell
 source ~/.bashrc
 ```
+
+## Managing processes
+
+A process is an instance of a running program. To see all the running processes we use:
+
+``` shell
+ps
+```
+
+To put a process in the background we use include an ampersand (`&`) after it. For example, the following will wait for 100 seconds in the background and still let us use the terminal.
+
+``` shell
+sleep 100 &
+```
+
+To kill a process we use the `kill` command and supply the process ID number.
