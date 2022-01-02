@@ -43,3 +43,11 @@ Starting from Windows 10, Windows is shipped with both a Windows kernel and a Li
 Once you've installed Docker in your machine, start it and run `docker version` on the terminal.
 
 ![docker version](img/03_docker_version.png)
+
+## Docker development workflow
+
+1. add a `Dockerfile` to the application. We can call this *dockerizing the application*
+
+The `Dockerfile` is a plain text file that Docker uses to package the application into an **Image**. This image contains everything that the application needs to run. This includes a cut-down OS, a runtime environment (like Node or Python), the application files, third-party libraries, environment variables, etc. Once we have an image, we give it to Docker so that the image can be run in a Container.
+
+Once we have that image, we can push it to a Docker registry (like DockerHub). From there we can pull it to any machine running Docker. This machine can be a testing or production server for example.
