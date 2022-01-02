@@ -271,3 +271,43 @@ ls /bin | less
 We can write multi-line commands by using a backslash (`\`) and pressing enter.
 
 ![multiline commands](img/12_multiline_commands.png)
+
+## Environment variables
+
+We use environment variables to set or store settings for our application. To view the environment variables we run:
+
+``` shell
+printenv
+```
+
+The return value is a list of `key=value` pairs.
+
+![printenv](img/13_printenv.png)
+
+An important one to understand is `PATH`. Its value is the semi-colon separated list of paths that the OS will search for when requested to execute a program. If we only want to receive the value of one env variable (for example, `PATH`) we can use either of the following:
+
+``` shell
+printenv PATH
+```
+
+``` shell
+echo $PATH
+```
+
+To set the value of an environment variable we use:
+
+``` shell
+export VAR_NAME=value
+```
+
+This variable will be set for the current session. If we want the variables to be available when re-starting, we need to include them in the `.bashrc` file. This is the user's personal startup file. We can achieve this with chaining:
+
+``` shell
+echo VAR_NAME=value >> .bashrc
+```
+
+The `>>` means append (as opposed to re-write the entire file). This changes will only be available starting from the next terminal session. If we need the `.bashrc` file to be re-loaded, we need to use:
+
+``` shell
+source ~/.bashrc
+```
