@@ -24,8 +24,18 @@ Problems with VMs are that:
 - slow to start
 - resource intensive (each VM takes up a slice of the hardware)
 
-A container is an isolated environment for running an application, just as a VM. Differences are that 
+A container is an isolated environment for running an application, just as a VM. Differences are that:
 
-- they all share the OS of the host and are therefore, more lightweight
-- containers start up very quickly
-- they use up less hardware resources
+- they all share the OS of the host and are therefore, more lightweight.
+- containers start up very quickly.
+- they use up less hardware resources.
+
+## Docker architecture
+
+Docker uses a client-server architecture which communicate using a REST API. The server is called the **Docker Engine**. It sits on the background and takes care of building and running containers. Technically, a container is a process like any other one running in your computer.
+
+Containers don't share the complete OS of the host, but the kernel of the OS. The kernel is the part of the OS that manages the applications and the allocation of hardware resources. Each operating system has a different kernel and can therefore only run different containers.
+
+![kernels](img/02_kernels.png)
+
+Starting from Windows 10, Windows is shipped with both a Windows kernel and a Linux kernel. Therefore, Windows machines can run both Windows and Linux containers. Each kernel will handle the respective ones. MacOS has a special kernel. It does not have native support for containers. Because of this, containers in MacOS need to run inside a Linux VM.
