@@ -1,2 +1,3 @@
-# mosh_docker
-Mosh course on Docker
+# THe ultimate Docker course
+
+Mosh Hamedani's course on Docker

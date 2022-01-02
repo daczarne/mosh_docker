@@ -1,0 +1,15 @@
+*.bib linguist-detectable
+*.cfg linguist-detectable
+*.JSON linguist-detectable
+*.json linguist-detectable
+*.mako linguist-detectable
+*.md linguist-detectable
+*.md linguist-documentation=false
+*.Rmd linguist-detectable
+*.sql linguist-detectable
+*.sql linguist-language=sql
+*.svg linguist-detectable
+*.ini linguist-detectable
+*.toml linguist-detectable
+*.yml linguist-detectable
+*.yaml linguist-detectable
