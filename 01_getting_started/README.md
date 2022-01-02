@@ -46,8 +46,59 @@ Once you've installed Docker in your machine, start it and run `docker version` 
 
 ## Docker development workflow
 
-1. add a `Dockerfile` to the application. We can call this *dockerizing the application*
+Add a `Dockerfile` to the application. We can call this *dockerizing the application*.
 
 The `Dockerfile` is a plain text file that Docker uses to package the application into an **Image**. This image contains everything that the application needs to run. This includes a cut-down OS, a runtime environment (like Node or Python), the application files, third-party libraries, environment variables, etc. Once we have an image, we give it to Docker so that the image can be run in a Container.
 
 Once we have that image, we can push it to a Docker registry (like DockerHub). From there we can pull it to any machine running Docker. This machine can be a testing or production server for example.
+
+You can list the images in your computer by running
+
+``` shell
+docker image ls
+```
+
+![docker images](img/04_docker_images.png)
+
+A basic Docker file will look something like this:
+
+``` dockerfile
+FROM node:alpine
+COPY . /app
+WORKDIR /app
+CMD node app.js
+```
+
+These are just the instructions on how to build and run the image. The `FROM` keyword establishes the base image from where to start. In this case, we are setting the base image to have a `node` runtime in a Linux `alpine` distribution. The names of these base images come from the [DockerHub](https://hub.docker.com/) registry. DockerHub is to Docker, what GitHub is to Git.
+
+The `COPY` step is telling Docker that once the base image is pulled, it needs to copy into the container all the application files. We could list directories or even files, but here we are telling it to copy all by passing `.` as the first argument. All these files need to be copied into the `/app` directory in the image. Docker will take care of creating this directory.
+
+Next we set the working directory with the `WORKDIR` command. In this case, we are setting it to be the `/app` directory that we created previously.
+
+Lastly, we need to specify which commands to run using the `CMD` instruction. In this case, we are telling it to run `node app.js` so that it starts our application.
+
+Now that we have a Dockerfile, we need to tell Docker to build the image. To do that, we use the `docker build` command. We need to give our image a tag using the `-t` flag. Finally we need to tell Docker where it can find the Dockerfile. If we are running the command from our application directory and the Dockerfile is in the root, we can just pass a `.` to the command.
+
+``` shell
+docker build -t <image_name> .
+```
+
+![docker build](img/05_docker_build.png)
+
+If we now re-run `docker image ls` we'll see our new image there.
+
+![docker images 2](img/06_docker_images.png)
+
+Now we can run the application from any directory in our computer with the `docker run` command plus the image name.
+
+``` shell
+docker run <image_name>
+```
+
+![docker run](img/07_docker_run.png)
+
+If we publish our images to a registry (like DockerHub) we can then pull them from other computers by running
+
+``` shell
+docker pull author/image-name
+```
