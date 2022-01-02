@@ -195,3 +195,21 @@ Tow basic concepts in Linux are
 But we can change the sources of either input or output. This is referred to as *redirection*. For example, `cat file1.txt` will print the content of `file1.txt` to the screen. But we can redirect the output by using the redirection operator (`>`) and send it to `file2.txt`.
 
 Similarly, we can use the `<` sign to redirect the standard input.
+
+## Search for text
+
+To search for text in a file we use the `grep` command, which stands for *global regular expression*. This search is case sensitive. We use it by supplying a string pattern and a file name.
+
+``` shell
+grep Hello file1.txt
+```
+
+We can remove case sensitivity with the `-i` flag.
+
+``` shell
+grep -i hello file1.txt
+```
+
+We can search in multiple files by supplying multiple file names or by supplying a file name pattern.
+
+To search in directories, we can supply a directory name, or use `.` to refer to the current directory with the `-r` flag.
