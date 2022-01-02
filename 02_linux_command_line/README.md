@@ -142,3 +142,45 @@ To navigate the files we need to use commands.
 - `touch <file_name> ... <file_name>` will create all the files that we list
 - `rm <file_name> ... <file_name>` will delete all the files that we list. We can also use patterns.
 - `rm -r <directory_name>` will delete the directory and all its files
+
+## Viewing and editing files
+
+To view and edit files we can use `nano`. We open the file in nano by running.
+
+``` shell
+nano <file_name>
+```
+
+We ca ¿n now make changes to the file in the text editor. To exit a file we press `control + x`.
+
+To see the content of a file we run:
+
+``` shell
+cat <file_name>
+```
+
+`cat` is short for *concatenate* and we can use it to combine files. When viewing files, `cat` is only useful for short files. For longer files we use:
+
+``` shell
+more <path/to/file>
+```
+
+When using `more` we can scroll down one page at a time by pressing the space bar, or one line at a time with the enter key We can exit by pressing `q`. But we can only scroll down. If we want to be able to scroll both up and down we run:
+
+``` shell
+less <path/to/file>
+```
+
+When using `less` we can scroll both up and down by using the arrows. The space bar, enter and `q` still work with `less`.
+
+To look just at the head of a file we can use the `head` command followed by `-n #` where `#` is the number of lines.
+
+``` shell
+head -n 5 <file_name>
+```
+
+Similarly, we can use `tail` to see the last `n` lines.
+
+``` shell
+tail -n 5 <file_name>
+```
