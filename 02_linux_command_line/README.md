@@ -184,3 +184,14 @@ Similarly, we can use `tail` to see the last `n` lines.
 ``` shell
 tail -n 5 <file_name>
 ```
+
+## Redirection
+
+Tow basic concepts in Linux are
+
+- Standard input => keyboard
+- Standard output => screen
+
+But we can change the sources of either input or output. This is referred to as *redirection*. For example, `cat file1.txt` will print the content of `file1.txt` to the screen. But we can redirect the output by using the redirection operator (`>`) and send it to `file2.txt`.
+
+Similarly, we can use the `<` sign to redirect the standard input.
