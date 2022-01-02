@@ -90,3 +90,46 @@ apt remove nano
 ```
 
 ![apt remove nano](img/11_apt_remove_nano.png)
+
+## Linux file system
+
+In Linux (just as with other OSs), files are organized in a tree. In Linux, everything is a file (including processes and directories). The root directory in Linux is just `/`. After that, standard directories include
+
+- `bin` which includes all the binaries for that distro
+- `boot` which includes all the files related to booting the system
+- `dev` which is short for *devices* (not development) and includes all the files needed for accessing devices
+- `etc` which is short for *editable text configurations* (not etcetera) and includes all the configuration files
+- `home` which where all home directories (users) are stored
+- `root` which is the home directory of the root user
+- `lib` which is where software library dependencies are stored
+- `var` which is short for *variable* and is where we store files that are update frequently (like logs)
+- `proc` which is where we store files that represent running processes
+
+``` txt
+  /
+  |_ bin
+  |_ boot
+  |_ dev
+  |_ etc
+  |_ home
+  |_ root
+  |_ lib
+  |_ var
+  |_ proc
+```
+
+## Navigating the file system
+
+To navigate the files we need to use commands.
+
+- `pwd` will *print working directory*
+- `ls` will *list* the files in that directory. Some flags that we can add are:
+  - `-1` for listing them one per row
+  - `-l` for long listing (includes more details)
+  - `<path>` will show the files in that path (without having to navigate to it)
+- `cd` will *change directory*. We can use either relative or absolute paths:
+  - relative paths are relative to the current working directory
+  - absolute paths always start from the root `/`
+  - `cd ..` will take us one level up in the tree
+  - `cd ../..` will take us two levels up in the tree
+  - `cd ~` will take us to the home directory of the current user
