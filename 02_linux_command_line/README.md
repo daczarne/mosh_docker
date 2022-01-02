@@ -196,7 +196,7 @@ But we can change the sources of either input or output. This is referred to as 
 
 Similarly, we can use the `<` sign to redirect the standard input.
 
-## Search for text
+## Searching for text
 
 To search for text in a file we use the `grep` command, which stands for *global regular expression*. This search is case sensitive. We use it by supplying a string pattern and a file name.
 
@@ -213,3 +213,31 @@ grep -i hello file1.txt
 We can search in multiple files by supplying multiple file names or by supplying a file name pattern.
 
 To search in directories, we can supply a directory name, or use `.` to refer to the current directory with the `-r` flag.
+
+## Finding files and directories
+
+To find files and directories we use the `find` command. If we run it without any arguments, it will list all files and directories in the current directory recursively. To search somewhere else, we need to supply a path.
+
+If we only want to list directories we need to add the `-type` option with the value of `d`:
+
+``` shell
+find -type d
+```
+
+Likewise, we can use the `f` value for only getting files:
+
+``` shell
+find -type f
+```
+
+We can add patterns. For example, to search for all files who's names start with `f` we use:
+
+``` shell
+find -type f -name "f*"
+```
+
+To make the search case insensitive we use:
+
+``` shell
+find -type f -iname "f*"
+```
