@@ -133,3 +133,12 @@ To navigate the files we need to use commands.
   - `cd ..` will take us one level up in the tree
   - `cd ../..` will take us two levels up in the tree
   - `cd ~` will take us to the home directory of the current user
+
+## Manipulating files and directories
+
+- `mkdir` will create a new directory as a child of the current directory
+- we use the `mv <current_location> <new_location>` to *move* a file or rename it
+- `touch <file_name>` will create a new file
+- `touch <file_name> ... <file_name>` will create all the files that we list
+- `rm <file_name> ... <file_name>` will delete all the files that we list. We can also use patterns.
+- `rm -r <directory_name>` will delete the directory and all its files
