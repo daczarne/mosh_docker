@@ -398,3 +398,31 @@ adduser USER_NAME
 ![add user](img/16_add_user.png)
 
 Here we can see that `bob` was created and added to a user group of the same name. This is the default behavior. Now it is asking us to set the password. After that, it will ask us to enter additional information. This command is interactive, so we don't want to use it when building automated workflows.
+
+## Managing groups
+
+To manage groups we use the following commands:
+
+- `groupadd` to add a new group
+- `groupmod` to modify a group
+- `groupdel` to delete a group
+
+We use groups to manage access permissions.
+
+We can checkout the groups with:
+
+``` shell
+cat /etc/group
+```
+
+To add a user to a group we use `-g` for the primary group or `-G` for secondary groups:
+
+``` shell
+usermod -G GROUP_NAME USER_NAME
+```
+
+To see the group that a user belongs to we use:
+
+``` shell
+groups USER_NAME
+```
