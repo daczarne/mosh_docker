@@ -39,3 +39,7 @@ Containers don't share the complete OS of the host, but the kernel of the OS. Th
 ![kernels](img/02_kernels.png)
 
 Starting from Windows 10, Windows is shipped with both a Windows kernel and a Linux kernel. Therefore, Windows machines can run both Windows and Linux containers. Each kernel will handle the respective ones. MacOS has a special kernel. It does not have native support for containers. Because of this, containers in MacOS need to run inside a Linux VM.
+
+Once you've installed Docker in your machine, start it and run `docker version` on the terminal.
+
+![docker version](img/03_docker_version.png)
