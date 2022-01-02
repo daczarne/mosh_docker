@@ -1,3 +1,3 @@
-# THe ultimate Docker course
+# The ultimate Docker course
 
 Mosh Hamedani's course on Docker
