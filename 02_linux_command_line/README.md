@@ -60,3 +60,33 @@ Some commands that we can use are:
 - `ls` will display all directories
 - `history` will display a list of all the commands that we've run
 - with `!#` where `#` is a number from the history, we can re-run that command
+
+## Managing packages
+
+In Ubuntu we manage packages with `apt` (*Advances Package Tool*). If we run `apt` in the container, we can get a list of all the sub-commands that we can use
+
+![apt](img/07_apt.png)
+
+For example, we can use `apt list` to see the list of all available packages and their status.
+
+![apt list](img/08_apt_list.png)
+
+If we don't see the package that we need in that list, we can run `apt update` and the list will be updated from a predefined list of sources.
+
+![apt update](img/09_apt_update.png)
+
+To install a package we use.
+
+``` shell
+apt install <package_name>
+```
+
+![apt install nano](img/10_apt_install_nano.png)
+
+Here we are installing `nano` which is a lightweight text editor for Ubuntu. To remove it we run:
+
+``` shell
+apt remove nano
+```
+
+![apt remove nano](img/11_apt_remove_nano.png)
