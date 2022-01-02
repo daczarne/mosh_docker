@@ -327,3 +327,74 @@ sleep 100 &
 ```
 
 To kill a process we use the `kill` command and supply the process ID number.
+
+## Managing users
+
+To manage users we use the following commands:
+
+- `useradd` to add a new user
+- `usermod` to modify a user
+- `userdel` to delete a user
+
+To create a user called `john` with a home directory we run:
+
+``` shell
+useradd -m john
+```
+
+To see the user we run:
+
+``` shell
+cat /etc/passwd
+```
+
+![user add](img/14_useradd.png)
+
+We can see in the last line that the user `john` was added. This output prints all the users and their account information, separated by colons (`:`).
+
+- first comes the user name
+- the following `x` means that their password is store somewhere else
+- the first `1000` is the user ID
+- then comes the group ID (in this case also `1000`)
+- next we can see the home directory of this user (in this case `/home/john`)
+- lastly we see the shell program used when this user logs in (in this case `bin/sh`)
+
+We can modify the shell program as follows:
+
+``` shell
+usermod -s /bin/bash john
+```
+
+The user passwords can be found in the `shadow` file:
+
+``` shell
+cat /etc/shadow
+```
+
+This file is only accessible to the root user, and passwords are stored in encrypted format.
+
+To login is as a different user we open a new terminal window. First we need to run `docker ps` to get the container ID. Then we need to execute a bash session inside the container.
+
+``` shell
+docker exec -it -u USER_NAME CONTAINER_ID bash
+```
+
+![login in as user](img/15_login_in_as_user.png)
+
+To delete the user we run
+
+``` shell
+userdel USER_NAME
+```
+
+---
+
+We can also create users with the newer `adduser` command. This command will use `useradd` under the hood, but is more verbose.
+
+``` shell
+adduser USER_NAME
+```
+
+![add user](img/16_add_user.png)
+
+Here we can see that `bob` was created and added to a user group of the same name. This is the default behavior. Now it is asking us to set the password. After that, it will ask us to enter additional information. This command is interactive, so we don't want to use it when building automated workflows.
