@@ -134,3 +134,30 @@ RUN npm install
 ENV API_URL=http://api.myapp.com/
 EXPOSE 3000
 ```
+
+## Setting the user
+
+By default, Docker will run our application with the `root` user. But this user has too many privileges and can cause security issues in the application. For running the application we need to use a `system` user. This user needs to be created when building the image. And before creating the user, we need to create a group so that we can add the user to that group. We do all of this in one command. The best practice is for this system user and the group to be called `app`.
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+RUN addgroup app && adduser -S -G app app
+```
+
+Now we need to user the `USER` command to run the application using this user.
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+RUN addgroup app && adduser -S -G app app
+USER app
+```
