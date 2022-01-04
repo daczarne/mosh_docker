@@ -96,3 +96,16 @@ The best practice is to use `COPY`. When setting the `WORKDIR` the container wil
 We don't need to build and ship images with all the application dependencies. We can add files that explain how the environment needs to be built, exclude the dependencies and libraries themselves, and then add the command to re-establish the environment.
 
 To ignore files, we use a `.dockerignore` file. Any file or directory that we include in that file will be excluded at build time.
+
+## Running commands
+
+As part of the container build process we can run commands using the `RUN` keyword. For example, we can use this to install dependencies. Docker will download and install all dependencies when building, so that they are available when the image is used in a container.
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install
+```
+
+In each invocation of the `RUN` command we can pass a command. We can have as many invocations as needed.
