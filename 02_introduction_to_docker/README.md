@@ -1,4 +1,4 @@
-# Getting started
+# Introduction to Docker
 
 ## What is Docker?
 
