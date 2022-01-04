@@ -53,3 +53,40 @@ Or `shell`:
 ``` shell
 docker run -it IMAGE_NAME sh
 ```
+
+An example `Dockerfile` at this point would look like:
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+```
+
+## Copying files into the image
+
+Once we have selected a base image, we need to copy the application files into the image. We use the `COPY` command to copy files or directories from the current directory (the directory where the `Dockerfile` is located) into the image. The destination can be a directory in the image. If it doesn't exist, Docker will create it.
+
+We can specify multiple fils and or directories to copy by simply listing them with spaces. Remember that the list is case-sensitive. We can also use patterns to specify the list of files. If we want to copy everything in the current directory into the image, we use a period (`.`).
+
+The destination can be a directory, in which case we need to end it with a forward-slash (so `/app/`, not `/app`). We can use relative directories if the first set the `WORKDIR` command. If the destination is the `WORKDIR`, then we use a period (`.`).
+
+An example `Dockerfile` at this point would look like:
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+```
+
+If one of our files has a space in its name, then we need to use the array format of the `COPY` command:
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY ["hello world.txt", "."]
+```
+
+Alternatively, we can use the `ADD` command. This command has all the same features of the `COPY` command but:
+
+- we can add files from URLs (`http://.../file.json`)
+- if we supply a compressed file, `ADD` will automatically decompress it in the image. (`ADD file.zip`)
+
+The best practice is to use `COPY`. When setting the `WORKDIR` the container will start there if we run it in interactive mode.
