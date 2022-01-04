@@ -121,3 +121,16 @@ COPY . .
 RUN npm install
 ENV API_URL=http://api.myapp.com/
 ```
+
+## Exposing ports
+
+To set the port in which the container will be listing on we use the `EXPOSE` command. To it we pass the port number.
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+```
