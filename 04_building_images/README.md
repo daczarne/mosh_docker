@@ -90,3 +90,9 @@ Alternatively, we can use the `ADD` command. This command has all the same featu
 - if we supply a compressed file, `ADD` will automatically decompress it in the image. (`ADD file.zip`)
 
 The best practice is to use `COPY`. When setting the `WORKDIR` the container will start there if we run it in interactive mode.
+
+## Excluding files
+
+We don't need to build and ship images with all the application dependencies. We can add files that explain how the environment needs to be built, exclude the dependencies and libraries themselves, and then add the command to re-establish the environment.
+
+To ignore files, we use a `.dockerignore` file. Any file or directory that we include in that file will be excluded at build time.
