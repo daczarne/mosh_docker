@@ -109,3 +109,15 @@ RUN npm install
 ```
 
 In each invocation of the `RUN` command we can pass a command. We can have as many invocations as needed.
+
+## Setting environment variables
+
+To set environment variables we use the `ENV` instruction. To it we need to supply `key=value` pairs. The `=` sign can be omitted, but that is no longer considered best practice.
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install
+ENV API_URL=http://api.myapp.com/
+```
