@@ -214,3 +214,46 @@ CMD ["npm", "start"]
 The best practice is to use the execute form, because the shell form will be executed inside a separate shell (`/bin/sh` for Linux, or `cmd` for Windows). Therefore, the cleanup process for the shell form is more expensive.
 
 We also have a similar command called `ENTRYPOINT`. This too can the either a shell or execute form. The difference is that the `CMD` command can be over-written when running `docker run` by simply supplying a different command. To override the `ENTRYPOINT` command we would have to use the `--entrypoint` option. Therefore, it's recommended to use the `ENTRYPOINT` to specifying commands that we always want to run when starting the container, and using `CMD` for adhoc commands.
+
+## Speeding up builds
+
+An image is a collection of layers. A layer is a small file system that only includes modified files. When Docker builds the image he does so by executing the commands line after line, each one generating a new layer. That layer only includes the files that were modified as a result of that instruction. (Technically, some instructions might generate more then one layer. For example, the base image is generally going to consist of more than one layer.)
+
+We can explore the layers with the following command:
+
+``` shell
+docker history IMAGE_NAME
+```
+
+![docker history](img/01_docker_history.png)
+
+In the `CREATED BY` column you can see the instruction that created the layer. And in the `SIZE` column you can see the size of that layer. This list needs to be read from bottom to top.
+
+We can use caching to speed up our builds. When doing so, Docker will first check if the line that it's about to run was modified. If it was not, then it will not re-execute it, but use the cached one. The problem is that once a layer is re-built, all the subsequent layers need to be rebuilt too. Since the `COPY` instruction needs to come before the `RUN` instructions that install dependencies, every time we change the code base of our application the dependencies need to be installed again. This is generally the bottle neck in the build process.
+
+The solution to this problem is to separate the instructions. First we'll copy all the list of dependencies and install them. Then we'll copy the application code.
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+RUN addgroup app && adduser -S -G app app
+USER app
+WORKDIR /app
+COPY package*.json .
+RUN npm install
+COPY . .
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+CMD npm start
+```
+
+![first build](img/02_first_build.png)
+
+Here you can see that the first build (after modifying the `Dockerfile`) took almost a minute. Now we can do some changes to the code base and re-build.
+
+![second build](img/03_second_build.png)
+
+Now our build only took 1.3 seconds!! If you read the output you can see that while on the first build only layers 1, 2, and 3 where cached, on the second one layers 1 to 5 were cached.
+
+The take away is that the order of the instructions matters!! The more stable instructions should be on the top and the more changing ones on the bottom.
+
+![order of instructions](img/04_order_of_instructions.png)
