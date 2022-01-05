@@ -124,7 +124,7 @@ ENV API_URL=http://api.myapp.com/
 
 ## Exposing ports
 
-To set the port in which the container will be listing on we use the `EXPOSE` command. To it we pass the port number.
+To set the port in which the container will be listing on we use the `EXPOSE` command. To it we pass the port number. But this is the port of the container, not the localhost (on our machine).
 
 ``` Dockerfile
 FROM node:14.16.0-alpine3.13
@@ -161,3 +161,56 @@ EXPOSE 3000
 RUN addgroup app && adduser -S -G app app
 USER app
 ```
+
+## Defining entrypoints
+
+If we try running the application in the container at this point it won't work. The reason is that up until we use `RUN` command, we did everything with the `root` user. The new `app` user does not have permissions to access the `/app` directory in the image.
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+RUN addgroup app && adduser -S -G app app
+USER app
+WORKDIR /app
+COPY . .
+RUN npm install
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+```
+
+Now we can rebuild the image. When done we can start the app by running:
+
+``` shell
+docker run IMAGE_NAME npm start
+```
+
+But we don't want to have to include `npm start` every time we want to start the application in the container. We can work around this by specifying a command at the end of the `Dockerfile`.
+
+``` Dockerfile
+FROM node:14.16.0-alpine3.13
+RUN addgroup app && adduser -S -G app app
+USER app
+WORKDIR /app
+COPY . .
+RUN npm install
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+CMD npm start
+```
+
+Because the `CMD` instruction is to start the app we should not include multiple calls to it in the `Dockerfile`. If we do, only the last one will take effect.
+
+The difference between `RUN` and `CMD` is that `RUN` is a build-time instruction. It will be executed when we run `docker build`. On the other hand, `CMD` is a run-time instruction. It will be executed when we start the container via `docker run`.
+
+The `CMD` command has two forms. The *shell form* takes a command as we would run it on the local shell. The *execute form* takes an array of strings.
+
+``` Dockerfile
+# Shell form
+CMD npm start
+
+# Execute form
+CMD ["npm", "start"]
+```
+
+The best practice is to use the execute form, because the shell form will be executed inside a separate shell (`/bin/sh` for Linux, or `cmd` for Windows). Therefore, the cleanup process for the shell form is more expensive.
+
+We also have a similar command called `ENTRYPOINT`. This too can the either a shell or execute form. The difference is that the `CMD` command can be over-written when running `docker run` by simply supplying a different command. To override the `ENTRYPOINT` command we would have to use the `--entrypoint` option. Therefore, it's recommended to use the `ENTRYPOINT` to specifying commands that we always want to run when starting the container, and using `CMD` for adhoc commands.
