@@ -3,6 +3,7 @@
 - [Working with containers](#working-with-containers)
   - [Starting containers](#starting-containers)
   - [Viewing logs](#viewing-logs)
+  - [Publishing ports](#publishing-ports)
 
 ## Starting containers
 
@@ -50,3 +51,12 @@ This command has some additional options.
 - With the `-n` flag we can get just the last `n` lines of the log
 - With the `-t` flag we can add timestamps to the log entries.
 
+## Publishing ports
+
+To send traffic from the container to the local host we need to publish a port. As you can see above, containers are not published by default (their value is `3000/tcp` because we specified that on the `Dockerfile`). To publish a port we use the `-p` flag to publish a port in on the host to a port in the container.
+
+``` shell
+docker run -d -p LOCAL_PORT:CONTAINER_PORT --name NAME IMAGE
+```
+
+![container ports](img/04_container_ports.png)
