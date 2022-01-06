@@ -257,3 +257,25 @@ Now our build only took 1.3 seconds!! If you read the output you can see that wh
 The take away is that the order of the instructions matters!! The more stable instructions should be on the top and the more changing ones on the bottom.
 
 ![order of instructions](img/04_order_of_instructions.png)
+
+## Removing images
+
+Images that have no name and no tag are called **dangling** images. This are essentially layers that have no relationship with tagged images. To get rid of them we use:
+
+``` shell
+docker image prune
+```
+
+If the dangling images are not removed, that means that we still have containers running that are using the old images. Beware that running `docker ps` might not show these containers, as they might be in the stopped state. Be sure to run `docker ps -a`. To get rid of stopped containers we run:
+
+``` shell
+docker container prune
+```
+
+After this, `docker images` will still show us the tagged images. To remove one of these images we run:
+
+``` shell
+docker image rm IMAGE_NAME_OR_ID
+```
+
+We can pass multiple images separated by a space.
