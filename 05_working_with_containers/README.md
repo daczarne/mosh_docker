@@ -7,6 +7,7 @@
   - [Executing commands in running containers](#executing-commands-in-running-containers)
   - [Stopping and starting containers](#stopping-and-starting-containers)
   - [Removing containers](#removing-containers)
+  - [Containers file system](#containers-file-system)
 
 ## Starting containers
 
@@ -133,3 +134,11 @@ If we want to get rid of all stopped containers in one go, we run:
 ``` shell
 docker container prune
 ```
+
+## Containers file system
+
+Each container has its own file system, which is invisible to other containers.
+
+![container file system](#img/09_container_file_system.png)
+
+If we delete the container, the file system will be deleted with it and we will loose any extra data (for example, data generated during an interactive shell session). So we should never store data in the containers file system. To do that we use volumes.
