@@ -6,6 +6,7 @@
   - [Publishing ports](#publishing-ports)
   - [Executing commands in running containers](#executing-commands-in-running-containers)
   - [Stopping and starting containers](#stopping-and-starting-containers)
+  - [Removing containers](#removing-containers)
 
 ## Starting containers
 
@@ -100,3 +101,35 @@ docker start CONTAINER_NAME_OR_ID
 ```
 
 ![docker start](img/08_docker_start.png)
+
+## Removing containers
+
+There are two ways of removing a container:
+
+``` shell
+docker container remove CONTAINER_NAME_OR_ID
+```
+
+or
+
+``` shell
+docker rm CONTAINER_NAME_OR_ID
+```
+
+If the container is still running, we have two options. Stop the container and then remove it, or to use the `--force` option:
+
+``` shell
+docker rm -f CONTAINER_NAME_OR_ID
+```
+
+If we have many container but only want to search for one, we can use the pipe (in Linux):
+
+``` shell
+docker ps -a | grep CONTAINER_NAME
+```
+
+If we want to get rid of all stopped containers in one go, we run:
+
+``` shell
+docker container prune
+```
