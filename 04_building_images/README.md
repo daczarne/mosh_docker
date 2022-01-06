@@ -279,3 +279,51 @@ docker image rm IMAGE_NAME_OR_ID
 ```
 
 We can pass multiple images separated by a space.
+
+## Tagging images
+
+Whenever we run `docker build` Docker automatically assigns the image tag as `latest`. This is a meaningless tag. It's just a label. It doesn't necessarily mean that it is in fact the latest build. It might be pointing to an older image and cause problems.
+
+We can tag an image at build time by running:
+
+``` shell
+docker build -t REPOSITORY_NAME:TAG_NAME .
+```
+
+Which tagging convention you use depends on the situation (semantic versioning, code names, etc.).
+
+![tags](img/05_tags.png)
+
+An image can have multiple tags. To check that we just need to look at the image ID. If the ID is the same, it's the same image. We can remove a tag by running:
+
+``` shell
+docker image remove REPOSITORY_NAME:TAG_NAME
+```
+
+![remove tag](img/06_remove_tag.png)
+
+To tag an image after building it we can use:
+
+``` shell
+docker image tag REPOSITORY_NAME:CURRENT_TAG REPOSITORY_NAME:NEW_TAG
+```
+
+or
+
+``` shell
+docker image tag IMAGE_ID REPOSITORY_NAME:NEW_TAG
+```
+
+![tag after build](img/07_tag_after_build.png)
+
+The `latest` tag can get out of sync and we should not use it in production. For example, if we now build version 2 we'll see:
+
+![old latest](img/08_old_latest.png)
+
+Now the `latest` tag is pointing to version `1`, when the latest build is version `2`. To change the `latest` tag so that it points to the newest version of the image we run:
+
+``` shell
+docker image tag IMAGE_ID REPOSITORY_NAME:latest
+```
+
+![change latest](#img/09_change_latest.png)
