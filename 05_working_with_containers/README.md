@@ -4,6 +4,7 @@
   - [Starting containers](#starting-containers)
   - [Viewing logs](#viewing-logs)
   - [Publishing ports](#publishing-ports)
+  - [Executing commands in running containers](#executing-commands-in-running-containers)
 
 ## Starting containers
 
@@ -60,3 +61,23 @@ docker run -d -p LOCAL_PORT:CONTAINER_PORT --name NAME IMAGE
 ```
 
 ![container ports](img/04_container_ports.png)
+
+## Executing commands in running containers
+
+When we start a container it executes the default command that we specify in the `Dockerfile`. If we need to run commands on a running container we use:
+
+``` shell
+docker exec CONTAINER_NAME_OR_ID <command>
+```
+
+Commands need to be of the same OS as the base image (Linux commands for when using a Linux distro, Windows for when using Windows, and so on). This commands will be run in the default directory, which we specified in the `Dockerfile` with the `WORKDIR` instruction.
+
+If we want to start a shell session in the container we run:
+
+``` shell
+docker exec -it CONTAINER_NAME_OR_ID sh
+```
+
+When we are done we can run the `exit` command, and that won't affect the state of the container.
+
+![running commands](#img/05_running_commands.png)
