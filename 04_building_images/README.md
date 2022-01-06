@@ -1,5 +1,22 @@
 # Building images
 
+- [Building images](#building-images)
+  - [Images and containers](#images-and-containers)
+  - [Dockerfile instructions](#dockerfile-instructions)
+  - [Choosing the right base image](#choosing-the-right-base-image)
+  - [Copying files into the image](#copying-files-into-the-image)
+  - [Excluding files](#excluding-files)
+  - [Running commands](#running-commands)
+  - [Setting environment variables](#setting-environment-variables)
+  - [Exposing ports](#exposing-ports)
+  - [Setting the user](#setting-the-user)
+  - [Defining entrypoint](#defining-entrypoint)
+  - [Speeding up builds](#speeding-up-builds)
+  - [Removing images](#removing-images)
+  - [Tagging images](#tagging-images)
+  - [Sharing images](#sharing-images)
+  - [Saving and loading images](#saving-and-loading-images)
+
 ## Images and containers
 
 - An **Image** includes everything an application needs to run
