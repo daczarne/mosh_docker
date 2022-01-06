@@ -371,3 +371,23 @@ Now that the image is on DockerHub, we can pull it from any other machine by run
 ``` shell
 docker pull IMAGE_TAG
 ```
+
+## Saving and loading images
+
+If you have an image on your computer and want to port it to another machine but without using DockerHub, you can save it in a compress filed in your machine, port it, and then load it in the other machine.
+
+To save we run:
+
+``` shell
+docker image save -o OUTPUT_FILE IMAGE
+```
+
+where `OUTPUT_FILE` is usually a `tar` file. The result will be a `tar` file on your computer. You can unzip it to inspect it. Inside of it there will be folders, each representing a layer. Each layer contains a `json` file and another `tar` file, which itself contains all the files in that layer.
+
+To load the image we use:
+
+``` shell
+docker image load -i FILE_NAME
+```
+
+where `FILE_NAME` is a `tar` file containing the compressed version of our image.
