@@ -10,6 +10,7 @@
   - [Containers file system](#containers-file-system)
   - [Persisting data using volumes](#persisting-data-using-volumes)
   - [Copying files between the host and containers](#copying-files-between-the-host-and-containers)
+  - [Sharing source code with a container](#sharing-source-code-with-a-container)
 
 ## Starting containers
 
@@ -206,3 +207,15 @@ If we want to copy from the host to the container we use the same command but in
 ``` shell
 docker cp path/to/local/file CONTAINER_ID:PATH/TO/DIRECTORY
 ```
+
+## Sharing source code with a container
+
+Some times we are running our project locally in a container while doing some work. What happens if we change a file and we want to see the changes in action (for example, changes to a web page that we are building and we want to see them on the browser). We don't want to have to rebuild the entire image every time we make a change while working locally.
+
+To solve this we can create a mapping between a directory on the host and a directory inside the container. This way, any changes we make locally will immediately be visible inside the container. To do so, we use the same syntax as the one we used to map volumes. We can still add volumes by adding more `-v` flags.
+
+``` shell
+docker run -d -p HOST_PORT:CONTAINER_PORT -v $(pwd):/CONTAINER/ABSOLUTE/PATH -v VOLUME_NAME:/CONTAINER/ABSOLUTE/PATH IMAGE
+```
+
+Here the syntax `$(pwd)` means the return value of the `pwd` (current directory) command. This command will be evaluated first, and its return value replaced in our command.
