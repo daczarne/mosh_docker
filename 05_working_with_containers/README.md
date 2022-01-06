@@ -5,6 +5,7 @@
   - [Viewing logs](#viewing-logs)
   - [Publishing ports](#publishing-ports)
   - [Executing commands in running containers](#executing-commands-in-running-containers)
+  - [Stopping and starting containers](#stopping-and-starting-containers)
 
 ## Starting containers
 
@@ -81,3 +82,21 @@ docker exec -it CONTAINER_NAME_OR_ID sh
 When we are done we can run the `exit` command, and that won't affect the state of the container.
 
 ![running commands](#img/05_running_commands.png)
+
+## Stopping and starting containers
+
+We can stop a running container with
+
+``` shell
+docker stop CONTAINER_NAME_OR_ID
+```
+
+![docker stop](img/07_docker_stop.png)
+
+To re start it we use
+
+``` shell
+docker start CONTAINER_NAME_OR_ID
+```
+
+![docker start](img/08_docker_start.png)
