@@ -1,5 +1,23 @@
 # Linux Command Line
 
+- [Linux Command Line](#linux-command-line)
+  - [Linux distributions](#linux-distributions)
+  - [Running Linux](#running-linux)
+  - [Managing packages](#managing-packages)
+  - [Linux file system](#linux-file-system)
+  - [Navigating the file system](#navigating-the-file-system)
+  - [Manipulating files and directories](#manipulating-files-and-directories)
+  - [Viewing and editing files](#viewing-and-editing-files)
+  - [Redirection](#redirection)
+  - [Searching for text](#searching-for-text)
+  - [Finding files and directories](#finding-files-and-directories)
+  - [Chaining commands](#chaining-commands)
+  - [Environment variables](#environment-variables)
+  - [Managing processes](#managing-processes)
+  - [Managing users](#managing-users)
+  - [Managing groups](#managing-groups)
+  - [File permissions](#file-permissions)
+
 ## Linux distributions
 
 Linux is an open-source OS. Therefore, many development communities have built their our custom versions of it. We call them *Linux distributions* or *Linux distros* for short. Some of the most popular are:
