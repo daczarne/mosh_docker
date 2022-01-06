@@ -1,5 +1,8 @@
 # Working with containers
 
+- [Working with containers](#working-with-containers)
+  - [Starting containers](#starting-containers)
+
 ## Starting containers
 
 To see the running containers (which are just processes) we use:
