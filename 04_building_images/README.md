@@ -327,3 +327,47 @@ docker image tag IMAGE_ID REPOSITORY_NAME:latest
 ```
 
 ![change latest](#img/09_change_latest.png)
+
+## Sharing images
+
+To share images on DockerHub, first create a repository (just as you would on GitHub). In this repository you can have multiple images with different tags.
+
+![create repo](img/10_create_repository.png)
+
+Give it a new and description, and set its visibility.
+
+![create repo form](img/11_create_repository_form.png)
+
+Next we can connect the DockerHub repository to a GitHub repository. If we do that, every time we new code is included in the GitHub repository, DockerHub will pull the code and build a new image.
+
+![create repo settings](img/12_create_repository_settings.png)
+
+To push the image to the repository, we have to give it that name locally too. To do that we just change the tag:
+
+``` shell
+docker image tag IMAGE_ID NEW_TAG
+```
+
+Only that now `IMAGE_TAG` will be of the form `DOCKERHUB_USERNAME/REPOSITORY_NAME:TAG_NAME`.
+
+In order to push the image, first we need to login. To do so we run:
+
+``` shell
+docker login
+```
+
+If you are already logged into Docker Desktop, the CLI will use your credentials from there. Otherwise, it will ask you for them.
+
+To push the image to the repo we just run:
+
+``` shell
+docker push IMAGE_TAG
+```
+
+where once again `IMAGE_TAG` will be of the form `DOCKERHUB_USERNAME/REPOSITORY_NAME:TAG_NAME`. Docker will push the image one layer at a time. Therefore, changes to dependencies might cause this process to be a little bit slower.
+
+Now that the image is on DockerHub, we can pull it from any other machine by running:
+
+``` shell
+docker pull IMAGE_TAG
+```
