@@ -2,6 +2,7 @@
 
 - [Working with containers](#working-with-containers)
   - [Starting containers](#starting-containers)
+  - [Viewing logs](#viewing-logs)
 
 ## Starting containers
 
@@ -32,3 +33,20 @@ docker run -d --name NAME IMAGE
 ```
 
 ![docker run with name](img/02_docker_run_with_name.png)
+
+## Viewing logs
+
+To view the logs of a container we use:
+
+``` shell
+docker logs CONTAINER_ID
+```
+
+![docker logs](img/03_docker_logs.png)
+
+This command has some additional options.
+
+- With the `-f` flag we can follow the log. This will allow us to see on the terminal whatever is written to the log.
+- With the `-n` flag we can get just the last `n` lines of the log
+- With the `-t` flag we can add timestamps to the log entries.
+
