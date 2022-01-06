@@ -1,7 +1,10 @@
 {
   "cSpell.ignoreWords": [
     "WORKDIR",
+    "addgroup",
+    "adduser",
     "distro",
+    "dockerignore",
     "dockerizing"
   ]
 }

@@ -162,7 +162,7 @@ RUN addgroup app && adduser -S -G app app
 USER app
 ```
 
-## Defining entrypoints
+## Defining entrypoint
 
 If we try running the application in the container at this point it won't work. The reason is that up until we use `RUN` command, we did everything with the `root` user. The new `app` user does not have permissions to access the `/app` directory in the image.
 
