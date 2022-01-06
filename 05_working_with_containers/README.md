@@ -9,6 +9,7 @@
   - [Removing containers](#removing-containers)
   - [Containers file system](#containers-file-system)
   - [Persisting data using volumes](#persisting-data-using-volumes)
+  - [Copying files between the host and containers](#copying-files-between-the-host-and-containers)
 
 ## Starting containers
 
@@ -191,3 +192,17 @@ Now we can start a container, create a file in it, remove the container, start a
 ![persisted file](img/11_persisted_file.png)
 
 We can also share the same volume between different containers.
+
+## Copying files between the host and containers
+
+Sometimes we need to copy files between the host and a container. To do this we use the copy (`cp`) command. To it we need to pass a *source* and a *destination*. For the source we use the container ID, colon, the path to the file inside the container. The destination is a directory on the host, but a `.` signifies the current directory.
+
+``` shell
+docker cp CONTAINER_ID:PATH/TO/FILE .
+```
+
+If we want to copy from the host to the container we use the same command but invert the source and destination:
+
+``` shell
+docker cp path/to/local/file CONTAINER_ID:PATH/TO/DIRECTORY
+```
