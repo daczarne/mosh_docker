@@ -8,6 +8,7 @@
   - [Stopping and starting containers](#stopping-and-starting-containers)
   - [Removing containers](#removing-containers)
   - [Containers file system](#containers-file-system)
+  - [Persisting data using volumes](#persisting-data-using-volumes)
 
 ## Starting containers
 
@@ -142,3 +143,51 @@ Each container has its own file system, which is invisible to other containers.
 ![container file system](#img/09_container_file_system.png)
 
 If we delete the container, the file system will be deleted with it and we will loose any extra data (for example, data generated during an interactive shell session). So we should never store data in the containers file system. To do that we use volumes.
+
+## Persisting data using volumes
+
+A volume is a storage outside of the container. It can be in the local host or in the cloud.
+
+To create a volume we use the `create` command:
+
+``` shell
+docker volume create VOLUME_NAME
+```
+
+To inspect the volume we use the `inspect` command:
+
+``` shell
+docker volume inspect VOLUME_NAME
+```
+
+![docker volumes](img/10_volumes.png)
+
+This example volume has `"Driver": "local"` because we are using local storage. If you want to create them in the cloud, you need to do some research in that cloud service for *how to create Docker volumes*. The `Mountpoint` key contains as its value the location of the volume. In the case of MacOS, the path is inside the virtual machine.
+
+Now that we have a volume we can start a container and give it this volume for persistent data.
+
+``` shell
+docker run -d -p LOCAL_PORT:CONTAINER_PORT -v VOLUME_NAME:/CONTAINER/ABSOLUTE/PATH IMAGE
+```
+
+We do not need to create the volume before running the container. If the volume doesn't exist, Docker will create it when we run the `docker run` command. The same holds true for the directory in the container. But if the directory does not exist, we might run into issues with permissions (since the directory will be created by the `root` user). To solve this, we are going to add the creation of the directory in the `Dockerfile`.
+
+``` dockerfile
+FROM node:14.16.0-alpine3.13
+RUN addgroup app && adduser -S -G app app
+USER app
+WORKDIR /app
+RUN mkdir data
+COPY package*.json .
+RUN npm install
+COPY . .
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+CMD npm start
+```
+
+Now we can start a container, create a file in it, remove the container, start another container, and the file will still be there. This is because the volume is stored on the local host and not inside the container.
+
+![persisted file](img/11_persisted_file.png)
+
+We can also share the same volume between different containers.

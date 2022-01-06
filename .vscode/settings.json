@@ -1,11 +1,13 @@
 {
   "cSpell.ignoreWords": [
     "DOCKERHUB",
+    "Mountpoint",
     "WORKDIR",
     "addgroup",
     "adduser",
     "distro",
     "dockerignore",
-    "dockerizing"
+    "dockerizing",
+    "mkdir"
   ]
 }
