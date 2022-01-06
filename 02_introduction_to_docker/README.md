@@ -1,5 +1,11 @@
 # Introduction to Docker
 
+- [Introduction to Docker](#introduction-to-docker)
+  - [What is Docker?](#what-is-docker)
+  - [Virtual Machines Vs Containers](#virtual-machines-vs-containers)
+  - [Docker architecture](#docker-architecture)
+  - [Docker development workflow](#docker-development-workflow)
+
 ## What is Docker?
 
 Docker is a platform for building, running and shipping applications in a consistent manner. With Docker, if the application works in your machine, it will work in production. Without Docker, this might not happen for three different reasons:
