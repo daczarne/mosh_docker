@@ -16,6 +16,7 @@
   - [Viewing logs](#viewing-logs)
   - [Publishing changes](#publishing-changes)
   - [Migrating the database](#migrating-the-database)
+  - [Running tests](#running-tests)
 
 ## Installing Docker Compose
 
@@ -420,3 +421,53 @@ services:
 volumes:
   vidly:
 ```
+
+## Running tests
+
+To run the tests we create a new service in the `docker-compose.yml` file.
+
+For this service we do not want to build a new image, but rather use the existing image form that service. Therefore, instead of the `build` key we use the `image` key and supply to it the appropriate image. Since said image is being built by Docker Compose, its name will be `<project-name>_<service-name>`. We don't need to map `ports` for this service. We do want to keep the `volumes` so that if we make any changes to the application, these are available to the tests. The `command` for this service needs to be the test running command (in this example we are using `npm test`).
+
+``` yaml
+version: "3.8"
+
+services:
+  web:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+  web-tests:
+    image: vidly_web
+    volumes:
+      - ./frontend:/app
+    command: npm test
+  api:
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb://db/vidly
+    volumes:
+      - ./backend:/app
+    command: ./docker-entrypoint.sh
+  api:
+    image: vidly_api
+    environment:
+      DB_URL: mongodb://db/vidly
+    volumes:
+      - ./backend:/app
+    command: npm test
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:
+```
+
+This way of running tests can sometimes be a little bit slow.
