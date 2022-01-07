@@ -452,7 +452,7 @@ services:
     volumes:
       - ./backend:/app
     command: ./docker-entrypoint.sh
-  api:
+  api-tests:
     image: vidly_api
     environment:
       DB_URL: mongodb://db/vidly
