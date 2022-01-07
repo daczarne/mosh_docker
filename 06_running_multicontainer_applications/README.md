@@ -13,6 +13,7 @@
   - [Building images](#building-images)
   - [Starting and stopping the application](#starting-and-stopping-the-application)
   - [Docker networking](#docker-networking)
+  - [Viewing logs](#viewing-logs)
 
 ## Installing Docker Compose
 
@@ -279,3 +280,23 @@ ifconfig
 ![adaptors](img/03_adaptors.png)
 
 In this example we have two network adaptors: `eth0` (ethernet 0), and `lo`. The IP address for the `web` container is `172.21.0.2`.
+
+## Viewing logs
+
+We can see all the logs for all containers across this application in one place by running:
+
+``` shell
+docker-compose logs
+```
+
+The following options are available:
+
+- `-f` to follow the logs
+- `-t` to add timestamps
+- `--tail="all"` to specify number of lines (`"all"` is the default value)
+
+If we just want to see the logs for one container we use:
+
+``` shell
+docker logs CONTAINER_ID
+```
