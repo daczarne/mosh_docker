@@ -14,6 +14,7 @@
   - [Starting and stopping the application](#starting-and-stopping-the-application)
   - [Docker networking](#docker-networking)
   - [Viewing logs](#viewing-logs)
+  - [Publishing changes](#publishing-changes)
 
 ## Installing Docker Compose
 
@@ -299,4 +300,37 @@ If we just want to see the logs for one container we use:
 
 ``` shell
 docker logs CONTAINER_ID
+```
+
+## Publishing changes
+
+To avoid having to rebuild our images every time we change our code while working we can map the directories of our project to the container directories. To do that we use the `volumes` array. Each element of the array needs to be a mapping of the form `PROJECT_DIRECTORY:CONTAINER_DIRECTORY`. The `PROJECT_DIRECTORY` is relative to the location of the location of the `docker-compose.yml` file. Make sure to have installed dependencies locally too before rebuilding the image.
+
+``` yaml
+version: "3.8"
+
+services:
+  web:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+  api:
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb://db/vidly
+    volumes:
+      - ./backend:/app
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:
 ```
