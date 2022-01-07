@@ -15,6 +15,7 @@
   - [Docker networking](#docker-networking)
   - [Viewing logs](#viewing-logs)
   - [Publishing changes](#publishing-changes)
+  - [Migrating the database](#migrating-the-database)
 
 ## Installing Docker Compose
 
@@ -324,6 +325,91 @@ services:
       DB_URL: mongodb://db/vidly
     volumes:
       - ./backend:/app
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:
+```
+
+## Migrating the database
+
+When we release our application we want the database to be in a particular shape with some data. This is called **database migration**. Each stack uses its own migration tools, but in the abstract they all do the same. We create a migration script that executes the migration. It includes two functions: `up` for upgrading the database, and `down` for downgrading the database.
+
+In the `dockerfile` we use the `CMD` instruction to specify a command to run when running the container. But in the `docker-compose.yml` file we can use the `command` key (in the appropriate service) to override this `CMD` instruction. Since database migrations are part of the backend, in our example we'll include it in the `api` service.
+
+There is a chance that the `db` service will not always be ready by the time the `api` service gets to executing the commands (because setting up DB engines usually takes some time). This is where we need to use a *waiting script*. You can read all about waiting for containers [here](https://docs.docker.com/compose/startup-order/). In this example we'll use [wait-for-it](https://github.com/vishnubob/wait-for-it). This is just a shell script. With this script we can wait for the DB engine (or any other service) to complete, before continuing with other services. The script needs to be included in the project directory. To use it, we just add the command `.wait-for HOST_NAME:PORT` (in this case `HOST_NAME` is `db` since we want the `api` to wait for the database engine to be set up). Once the specified port for the specified service is receiving traffic, the command will be executed.
+
+``` yaml
+version: "3.8"
+
+services:
+  web:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+  api:
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb://db/vidly
+    volumes:
+      - ./backend:/app
+    command: ./wait-for db:27017 && migrate-mongo up && npm start
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:
+```
+
+If the command is too long, we can create an `entrypoint.sh` script to make our `docker-compose.yml` file more readable.
+
+``` shell
+#!/bin/sh
+
+echo "Waiting for MongoDB to start..."
+./wait-for db:27017 
+
+echo "Migrating the databse..."
+npm run db:up 
+
+echo "Starting the server..."
+npm start 
+```
+
+Now our `docker-compose.yml` can be simplified to:
+
+``` yaml
+version: "3.8"
+
+services:
+  web:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+  api:
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb://db/vidly
+    volumes:
+      - ./backend:/app
+    command: ./docker-entrypoint.sh
   db:
     image: mongo:4.0-xenial
     ports:
