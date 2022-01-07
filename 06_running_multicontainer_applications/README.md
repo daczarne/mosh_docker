@@ -12,6 +12,7 @@
     - [Volumes](#volumes)
   - [Building images](#building-images)
   - [Starting and stopping the application](#starting-and-stopping-the-application)
+  - [Docker networking](#docker-networking)
 
 ## Installing Docker Compose
 
@@ -251,3 +252,30 @@ docker-compose down
 ```
 
 This will stop and remove the containers, but the images will still be there.
+
+## Docker networking
+
+When we run our application with Docker Compose, Docker Compose will automatically create a network and add the containers to the network. With this, the containers will be able to talk to each other.
+
+To see the Docker networks on our local machine we run:
+
+``` shell
+docker network ls
+```
+
+![networks](img/02_networks.png)
+
+Every Docker installation has three networks: `bridge`, `host`, and `none`. For our application a new network will be created. Its name will be `PROJECT_NAME_default`. The driver for this network will be `bridge` on Linux or `Nat` on Windows. This network containers as many hosts as there are services declared on the `docker-compose.yml` file (in our example, three).
+
+Docker comes with an embedded DNS server that contains the name and IP address of each container. Inside these containers there's a component called **DNS resolver**. This DNS resolver talks to the DNS server to find the IP address of the target container. The server returns the IP address and now the two containers can talk.
+
+We can start an interactive shell session in the container with the root user and use `ifconfig` to see the IP address:
+
+``` shell
+docker exec -it -u root CONTAINER_ID sh
+ifconfig
+```
+
+![adaptors](img/03_adaptors.png)
+
+In this example we have two network adaptors: `eth0` (ethernet 0), and `lo`. The IP address for the `web` container is `172.21.0.2`.
