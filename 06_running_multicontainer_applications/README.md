@@ -10,6 +10,7 @@
     - [Mapping ports](#mapping-ports)
     - [Setting environment variables](#setting-environment-variables)
     - [Volumes](#volumes)
+  - [Building images](#building-images)
 
 ## Installing Docker Compose
 
@@ -201,4 +202,22 @@ services:
 
 volumes:
   vidly:
+```
+
+## Building images
+
+All the operations that we saw for Docker related to images and containers are also available for Docker Compose. The difference is that these commands will impact all containers in our application. We can build all images with:
+
+``` shell
+docker-compose build
+```
+
+![docker compose build](#img/01_docker_compose_build.png)
+
+The names of the images are prefixed with the name of the directory.
+
+If we want to avoid caching, we add the `--no-cache` option.
+
+``` shell
+docker-compose build --no-cache
 ```
