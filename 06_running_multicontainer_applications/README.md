@@ -11,6 +11,7 @@
     - [Setting environment variables](#setting-environment-variables)
     - [Volumes](#volumes)
   - [Building images](#building-images)
+  - [Starting and stopping the application](#starting-and-stopping-the-application)
 
 ## Installing Docker Compose
 
@@ -221,3 +222,32 @@ If we want to avoid caching, we add the `--no-cache` option.
 ``` shell
 docker-compose build --no-cache
 ```
+
+## Starting and stopping the application
+
+To start an application with Docker Compose we run:
+
+``` shell
+docker-compose up
+```
+
+If the images are available, Docker Compose is going to run them in containers. Otherwise, it will automatically build the images and then run them. Option to this command include:
+
+- `--build` to force a build of the images before starting the application
+- `-d` for detached mode (start containers in the background)
+
+To see the running containers relevant for an application we run:
+
+``` shell
+docker-compose ps
+```
+
+This is difference from `docker ps` since this command will show all containers, regardless of whether they are relevant for this application or not.
+
+To take down the containers and free up space we run:
+
+``` shell
+docker-compose down
+```
+
+This will stop and remove the containers, but the images will still be there.
