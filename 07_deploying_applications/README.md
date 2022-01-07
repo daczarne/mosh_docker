@@ -59,4 +59,45 @@ volumes:
   vidly:
 ```
 
-We could create other compose files for other environments: `docker-compose.testing.yml`, `docker-compose.stg.yml`, etc.
+We could create other compose files for other environments: `docker-compose.testing.yml`, `docker-compose.stg.yml`, etc. When calling `docker-compose build` we need to pass the correct file using the `-f` flag:
+
+``` shell
+docker-compose -f docker-compose.prod.yml build
+```
+
+---
+
+If we also want to do changes to the `Dockerfile` themselves and have different ones for different environments (dev, stg, prod, testing, etc) those files will also be called `Dockerfile.prod`, `Dockerfile.stg`, and so on. So now, we need to expand the declaration of the `build` in our `docker-compose.prod.yml` so that the correct `Dockerfile` is used.
+
+``` yaml
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - 80:80
+    restart: unless-stopped
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb://db/vidly
+    command: ./docker-entrypoint.sh
+    restart: unless-stopped
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+    restart: unless-stopped
+
+volumes:
+  vidly:
+```
