@@ -65,6 +65,12 @@ We could create other compose files for other environments: `docker-compose.test
 docker-compose -f docker-compose.prod.yml build
 ```
 
+Likewise, when using the `docker-compose up` command, we need to supply the file name:
+
+``` shell
+docker-compose -f docker-compose.prod.yml up
+```
+
 ---
 
 If we also want to do changes to the `Dockerfile` themselves and have different ones for different environments (dev, stg, prod, testing, etc) those files will also be called `Dockerfile.prod`, `Dockerfile.stg`, and so on. So now, we need to expand the declaration of the `build` in our `docker-compose.prod.yml` so that the correct `Dockerfile` is used.
