@@ -343,7 +343,7 @@ Now the `latest` tag is pointing to version `1`, when the latest build is versio
 docker image tag IMAGE_ID REPOSITORY_NAME:latest
 ```
 
-![change latest](#img/09_change_latest.png)
+![change latest](img/09_change_latest.png)
 
 ## Sharing images
 
