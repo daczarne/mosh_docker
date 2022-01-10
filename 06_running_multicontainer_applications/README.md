@@ -218,7 +218,7 @@ All the operations that we saw for Docker related to images and containers are a
 docker-compose build
 ```
 
-![docker compose build](#img/01_docker_compose_build.png)
+![docker compose build](img/01_docker_compose_build.png)
 
 The names of the images are prefixed with the name of the directory.
 
