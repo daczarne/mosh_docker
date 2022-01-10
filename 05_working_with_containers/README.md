@@ -86,7 +86,7 @@ docker exec -it CONTAINER_NAME_OR_ID sh
 
 When we are done we can run the `exit` command, and that won't affect the state of the container.
 
-![running commands](#img/05_running_commands.png)
+![running commands](img/05_running_commands.png)
 
 ## Stopping and starting containers
 
@@ -142,7 +142,7 @@ docker container prune
 
 Each container has its own file system, which is invisible to other containers.
 
-![container file system](#img/09_container_file_system.png)
+![container file system](img/09_container_file_system.png)
 
 If we delete the container, the file system will be deleted with it and we will loose any extra data (for example, data generated during an interactive shell session). So we should never store data in the containers file system. To do that we use volumes.
 
