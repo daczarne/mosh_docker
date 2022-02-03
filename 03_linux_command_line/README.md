@@ -50,7 +50,7 @@ To check which containers are running we run:
 docker ps
 ```
 
-![docker ps](#img/04_docker_ps.png)
+![docker ps](img/04_docker_ps.png)
 
 The `ubuntu` image is not being used in any of our containers and is therefore not shown. If we want to display all containers (running or otherwise), we need to add the `-a` flag (which stands for *all*):
 
